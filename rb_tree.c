@@ -7,7 +7,7 @@
 
 typedef struct RBTreeNode {
     int data;
-    int color; // 1 for RED, 0 for BLACK
+    int color;
     struct RBTreeNode* left;
     struct RBTreeNode* right;
     struct RBTreeNode* parent;
@@ -15,14 +15,14 @@ typedef struct RBTreeNode {
 
 typedef struct RBTree {
     RBTreeNode* root;
-    RBTreeNode* TNULL; // NULL node for convenience
+    RBTreeNode* TNULL;
 } RBTree;
 
 // Utility function to create a new Red-Black Tree node
 RBTreeNode* newNode(int data, RBTreeNode* TNULL) {
     RBTreeNode* node = (RBTreeNode*)malloc(sizeof(RBTreeNode));
     node->data = data;
-    node->color = RED;  // New node is always red initially
+    node->color = RED;
     node->left = TNULL;
     node->right = TNULL;
     node->parent = NULL;
@@ -38,56 +38,38 @@ RBTree* createRBTree() {
     return tree;
 }
 
-// Left rotate subtree rooted with x
+// Left rotate
 void leftRotate(RBTree* tree, RBTreeNode* x) {
     RBTreeNode* y = x->right;
     x->right = y->left;
-
-    if (y->left != tree->TNULL) {
-        y->left->parent = x;
-    }
-
+    if (y->left != tree->TNULL) y->left->parent = x;
     y->parent = x->parent;
-    if (x->parent == NULL) {
-        tree->root = y;
-    } else if (x == x->parent->left) {
-        x->parent->left = y;
-    } else {
-        x->parent->right = y;
-    }
+    if (x->parent == NULL) tree->root = y;
+    else if (x == x->parent->left) x->parent->left = y;
+    else x->parent->right = y;
     y->left = x;
     x->parent = y;
 }
 
-// Right rotate subtree rooted with y
+// Right rotate
 void rightRotate(RBTree* tree, RBTreeNode* y) {
     RBTreeNode* x = y->left;
     y->left = x->right;
-
-    if (x->right != tree->TNULL) {
-        x->right->parent = y;
-    }
-
+    if (x->right != tree->TNULL) x->right->parent = y;
     x->parent = y->parent;
-    if (y->parent == NULL) {
-        tree->root = x;
-    } else if (y == y->parent->right) {
-        y->parent->right = x;
-    } else {
-        y->parent->left = x;
-    }
+    if (y->parent == NULL) tree->root = x;
+    else if (y == y->parent->right) y->parent->right = x;
+    else y->parent->left = x;
     x->right = y;
     y->parent = x;
 }
 
-// Fix violations after insertion to maintain Red-Black properties
+// Fix violations after insertion
 void fixInsert(RBTree* tree, RBTreeNode* k) {
     RBTreeNode* u;
-
     while (k->parent->color == RED) {
         if (k->parent == k->parent->parent->left) {
             u = k->parent->parent->right;
-
             if (u->color == RED) {
                 u->color = BLACK;
                 k->parent->color = BLACK;
@@ -104,7 +86,6 @@ void fixInsert(RBTree* tree, RBTreeNode* k) {
             }
         } else {
             u = k->parent->parent->left;
-
             if (u->color == RED) {
                 u->color = BLACK;
                 k->parent->color = BLACK;
@@ -120,102 +101,58 @@ void fixInsert(RBTree* tree, RBTreeNode* k) {
                 leftRotate(tree, k->parent->parent);
             }
         }
-        if (k == tree->root) {
-            break;
-        }
+        if (k == tree->root) break;
     }
     tree->root->color = BLACK;
 }
-
-// Insertion function
-void insert(RBTree* tree, int data) {
-    RBTreeNode* node = newNode(data, tree->TNULL);
-    RBTreeNode* y = NULL;
-    RBTreeNode* x = tree->root;
-
-    while (x != tree->TNULL) {
-        y = x;
-        if (node->data < x->data) {
-            x = x->left;
-        } else {
-            x = x->right;
-        }
-    }
-
-    node->parent = y;
-    if (y == NULL) {
-        tree->root = node;
-    } else if (node->data < y->data) {
-        y->left = node;
-    } else {
-        y->right = node;
-    }
-
-    if (node->parent == NULL) {
-        node->color = BLACK;
-        return;
-    }
-
-    if (node->parent->parent == NULL) {
-        return;
-    }
-
-    fixInsert(tree, node);
-}
-
-// Fix violations after deletion to maintain Red-Black properties
+// Fix violations after deletion
 void fixDelete(RBTree* tree, RBTreeNode* x) {
-    RBTreeNode* s;
     while (x != tree->root && x->color == BLACK) {
         if (x == x->parent->left) {
-            s = x->parent->right;
-            if (s->color == RED) {
-                s->color = BLACK;
+            RBTreeNode* w = x->parent->right;
+            if (w->color == RED) {
+                w->color = BLACK;
                 x->parent->color = RED;
                 leftRotate(tree, x->parent);
-                s = x->parent->right;
+                w = x->parent->right;
             }
-
-            if (s->left->color == BLACK && s->right->color == BLACK) {
-                s->color = RED;
+            if (w->left->color == BLACK && w->right->color == BLACK) {
+                w->color = RED;
                 x = x->parent;
             } else {
-                if (s->right->color == BLACK) {
-                    s->left->color = BLACK;
-                    s->color = RED;
-                    rightRotate(tree, s);
-                    s = x->parent->right;
+                if (w->right->color == BLACK) {
+                    w->left->color = BLACK;
+                    w->color = RED;
+                    rightRotate(tree, w);
+                    w = x->parent->right;
                 }
-
-                s->color = x->parent->color;
+                w->color = x->parent->color;
                 x->parent->color = BLACK;
-                s->right->color = BLACK;
+                w->right->color = BLACK;
                 leftRotate(tree, x->parent);
                 x = tree->root;
             }
         } else {
-            s = x->parent->left;
-            if (s->color == RED) {
-                s->color = BLACK;
+            RBTreeNode* w = x->parent->left;
+            if (w->color == RED) {
+                w->color = BLACK;
                 x->parent->color = RED;
                 rightRotate(tree, x->parent);
-                s = x->parent->left;
+                w = x->parent->left;
             }
-
-            if (s->right->color == BLACK && s->left->color == BLACK) {
-                s->color = RED;
+            if (w->right->color == BLACK && w->left->color == BLACK) {
+                w->color = RED;
                 x = x->parent;
             } else {
-                if (s->left->color == BLACK) {
-                    s->right->color = BLACK;
-                    s->color = RED;
-                    leftRotate(tree, s);
-                    s = x->parent->left;
+                if (w->left->color == BLACK) {
+                    w->right->color = BLACK;
+                    w->color = RED;
+                    leftRotate(tree, w);
+                    w = x->parent->left;
                 }
-
-                s->color = x->parent->color;
+                w->color = x->parent->color;
                 x->parent->color = BLACK;
-                s->left->color = BLACK;
+                w->left->color = BLACK;
                 rightRotate(tree, x->parent);
                 x = tree->root;
             }
@@ -224,63 +161,49 @@ void fixDelete(RBTree* tree, RBTreeNode* x) {
     x->color = BLACK;
 }
 
-// Transplant function for deletion
+// Replace node
 void rbTransplant(RBTree* tree, RBTreeNode* u, RBTreeNode* v) {
-    if (u->parent == NULL) {
-        tree->root = v;
-    } else if (u == u->parent->left) {
-        u->parent->left = v;
-    } else {
-        u->parent->right = v;
-    }
+    if (u->parent == NULL) tree->root = v;
+    else if (u == u->parent->left) u->parent->left = v;
+    else u->parent->right = v;
     v->parent = u->parent;
 }
 
-// Find the minimum node
-RBTreeNode* minimum(RBTreeNode* node, RBTreeNode* TNULL) {
-    while (node->left != TNULL) {
-        node = node->left;
-    }
+// Find minimum node in the tree
+RBTreeNode* minimum(RBTree* tree, RBTreeNode* node) {
+    while (node->left != tree->TNULL) node = node->left;
     return node;
 }
-
-// Deletion function
+// Search node
+RBTreeNode* search(RBTreeNode* root, RBTreeNode* TNULL, int key) {
+    if (root == TNULL || root->data == key) return root;
+    if (key < root->data) return search(root->left, TNULL, key);
+    return search(root->right, TNULL, key);
+}
+// Delete node
 void deleteNode(RBTree* tree, int data) {
-    RBTreeNode* z = tree->root;
-    RBTreeNode* x, *y;
-    RBTreeNode* TNULL = tree->TNULL;
-
-    while (z != TNULL) {
-        if (z->data == data) {
-            break;
-        }
-        if (data < z->data) {
-            z = z->left;
-        } else {
-            z = z->right;
-        }
-    }
-
-    if (z == TNULL) {
-        printf("Node not found!\n");
+    RBTreeNode* z = search(tree->root, tree->TNULL, data);
+    if (z == tree->TNULL) {
+        printf("Node %d not found.\n", data);
         return;
     }
 
-    y = z;
+    RBTreeNode* y = z;
     int yOriginalColor = y->color;
-    if (z->left == TNULL) {
+    RBTreeNode* x;
+
+    if (z->left == tree->TNULL) {
         x = z->right;
         rbTransplant(tree, z, z->right);
-    } else if (z->right == TNULL) {
+    } else if (z->right == tree->TNULL) {
         x = z->left;
         rbTransplant(tree, z, z->left);
     } else {
-        y = minimum(z->right, TNULL);
+        y = minimum(tree, z->right);
         yOriginalColor = y->color;
         x = y->right;
-        if (y->parent == z) {
-            x->parent = y;
-        } else {
+        if (y->parent == z) x->parent = y;
+        else {
             rbTransplant(tree, y, y->right);
             y->right = z->right;
             y->right->parent = y;
@@ -292,69 +215,116 @@ void deleteNode(RBTree* tree, int data) {
     }
 
     free(z);
+    if (yOriginalColor == BLACK) fixDelete(tree, x);
+}
+// Insert node
+void insert(RBTree* tree, int data) {
+    RBTreeNode* node = newNode(data, tree->TNULL);
+    RBTreeNode* y = NULL;
+    RBTreeNode* x = tree->root;
 
-    if (yOriginalColor == BLACK) {
-        fixDelete(tree, x);
+    while (x != tree->TNULL) {
+        y = x;
+        if (node->data < x->data) x = x->left;
+        else x = x->right;
     }
+
+    node->parent = y;
+    if (y == NULL) tree->root = node;
+    else if (node->data < y->data) y->left = node;
+    else y->right = node;
+
+    if (node->parent == NULL) {
+        node->color = BLACK;
+        return;
+    }
+
+    if (node->parent->parent == NULL) return;
+
+    fixInsert(tree, node);
+}
+// Count nodes
+int countNodes(RBTreeNode* node, RBTreeNode* TNULL) {
+    if (node == TNULL) return 0;
+    return 1 + countNodes(node->left, TNULL) + countNodes(node->right, TNULL);
 }
 
-// Display function to print each node's data, color, and child nodes
-void displayNode(RBTreeNode* node, RBTreeNode* TNULL) {
-    if (node != TNULL) {
-        printf("Node: %d (Color: %s)\n", node->data, (node->color == RED) ? "RED" : "BLACK");
-        if (node->left != TNULL)
-            printf("  Left Child: %d\n", node->left->data);
-        else
-            printf("  Left Child: NULL\n");
-
-        if (node->right != TNULL)
-            printf("  Right Child: %d\n", node->right->data);
-        else
-            printf("  Right Child: NULL\n");
-
-        printf("\n");
-        displayNode(node->left, TNULL);
-        displayNode(node->right, TNULL);
-    }
+// Display tree function
+void displayTree(RBTreeNode* root, RBTreeNode* TNULL, int space) {
+    if (root == TNULL) return;
+    space += 10;
+    displayTree(root->right, TNULL, space);
+    printf("\n");
+    for (int i = 10; i < space; i++) printf(" ");
+    printf("%d(%s)\n", root->data, (root->color == RED) ? "R" : "B");
+    displayTree(root->left, TNULL, space);
 }
 
-// Menu-driven function
-int main(){
+// Free the tree nodes
+void destroyTree(RBTreeNode* node, RBTreeNode* TNULL) {
+    if (node == TNULL) return;
+    destroyTree(node->left, TNULL);
+    destroyTree(node->right, TNULL);
+    free(node);
+}
+
+int main() {
     RBTree* tree = createRBTree();
-    int choice, value;
+    int choice, data;
 
     do {
-        printf("\nRed-Black Tree Operations Menu:\n");
-        printf("1. Insert a node\n");
-        printf("2. Delete a node\n");
-        printf("3. Display tree nodes\n");
-        printf("4. Exit\n");
-        printf("Enter your choice: ");
+        printf("\n1. Insert\n2. Search\n3. Count Nodes\n4. Delete\n5. Display\n6. Destroy Tree\n7. Exit\nEnter choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
             case 1:
-                printf("Enter value to insert: ");
-                scanf("%d", &value);
-                insert(tree, value);
-                printf("Node inserted.\n");
+                printf("Enter data to insert: ");
+                scanf("%d", &data);
+                insert(tree, data);
                 break;
+
             case 2:
-                printf("Enter value to delete: ");
-                scanf("%d", &value);
-                deleteNode(tree, value);
-                printf("Node deleted.\n");
+                printf("Enter data to search: ");
+                scanf("%d", &data);
+                RBTreeNode* node = search(tree->root, tree->TNULL, data);
+                if (node != tree->TNULL) printf("Node %d found.\n", data);
+                else printf("Node %d not found.\n", data);
                 break;
+
             case 3:
-                printf("Displaying tree nodes:\n");
-                displayNode(tree->root, tree->TNULL);
+                printf("Total nodes: %d\n", countNodes(tree->root, tree->TNULL));
                 break;
+
             case 4:
+                printf("Enter data to delete: ");
+                scanf("%d", &data);
+                deleteNode(tree, data);
+                break;
+
+            case 5:
+                printf("Red-Black Tree:\n");
+                displayTree(tree->root, tree->TNULL, 0);
+                break;
+
+            case 6:
+                destroyTree(tree->root, tree->TNULL);
+                tree->root = tree->TNULL;
+                printf("Tree destroyed.\n");
+                break;
+
+            case 7:
                 printf("Exiting...\n");
                 break;
+
             default:
-                printf("Invalid choice. Please try again.\n");
+                printf("Invalid choice.\n");
         }
-    } while (choice != 4);
+    } while (choice != 7);
+
+    // Destroy the tree on exit
+    destroyTree(tree->root, tree->TNULL);
+    free(tree->TNULL);
+    free(tree);
+
     return 0;
 }
