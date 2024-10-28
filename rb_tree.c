@@ -282,7 +282,6 @@ void fixDeletion(RBTreeNode **root, RBTreeNode *x) {
 }
 
 // Search for a value in the tree
-// Search for a value in the tree
 RBTreeNode* search(RBTreeNode* root, int data) {
     // Traverse the tree
     while (root != TNULL) {
