@@ -390,6 +390,13 @@ void display(RBTreeNode* root) {
         displayNode(root);
     }
 }
+void destroyTree(RBTreeNode* root, RBTreeNode* TNULL) {
+    if (root == TNULL)
+        return;
+    destroyTree(root->left, TNULL);
+    destroyTree(root->right, TNULL);
+    free(root);
+}
 
 int main() {
     initializeTNULL();
@@ -400,7 +407,7 @@ int main() {
     while (1) {
         printf("\nMenu:\n");
         printf("1. Insert\n2. Delete\n3. Search\n4. Find Max\n5. Find Min\n6. Height\n");
-        printf("7. Black Node Count\n8. In-order Traversal\n9. Pre-order Traversal\n10. Post-order Traversal\n11. Display\n0. Exit\n");
+        printf("7. Black Node Count\n8. In-order Traversal\n9. Pre-order Traversal\n10. Post-order Traversal\n11. Display\n12.Destroy\n0. Exit\n");
         printf(" Enter your choice: ");
         scanf("%d", &choice);
 
@@ -464,12 +471,18 @@ int main() {
             case 11:
                 display(root);
                 break;
+            case 12:
+                destroyTree(root, TNULL);
+                root = TNULL;
+                printf("Tree destroyed.\n");
+                break;
             case 0:
                 exit(0);
             default:
                 printf("Invalid choice.\n");
         }
     }
-
+    destroyTree(root,TNULL);
+    free(TNULL);
     return 0;
 }
