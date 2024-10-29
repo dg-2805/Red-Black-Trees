@@ -10,7 +10,6 @@ typedef struct RBTreeNode {
     struct RBTreeNode *left, *right, *parent;
 } RBTreeNode;
 
-// Global sentinel TNULL node
 RBTreeNode *TNULL;
 
 // Function prototypes
@@ -34,7 +33,6 @@ void displayNode(RBTreeNode* node);
 void display(RBTreeNode* root);
 void menu();
 
-// Function to initialize TNULL node
 void initializeTNULL() {
     TNULL = (RBTreeNode*)malloc(sizeof(RBTreeNode));
     TNULL->color = BLACK;
@@ -43,18 +41,16 @@ void initializeTNULL() {
     TNULL->parent = NULL;
 }
 
-// Function to create a new node
 RBTreeNode* createNode(int data) {
     RBTreeNode* node = (RBTreeNode*)malloc(sizeof(RBTreeNode));
     node->data = data;
     node->left = TNULL;
     node->right = TNULL;
     node->parent = NULL;
-    node->color = RED; // New nodes are always red
+    node->color = RED;
     return node;
 }
 
-// Left rotate function
 void leftRotate(RBTreeNode **root, RBTreeNode *x) {
     RBTreeNode *y = x->right;
     x->right = y->left;
@@ -70,7 +66,6 @@ void leftRotate(RBTreeNode **root, RBTreeNode *x) {
     x->parent = y;
 }
 
-// Right rotate function
 void rightRotate(RBTreeNode **root, RBTreeNode *y) {
     RBTreeNode *x = y->left;
     y->left = x->right;
@@ -86,7 +81,6 @@ void rightRotate(RBTreeNode **root, RBTreeNode *y) {
     y->parent = x;
 }
 
-// Fix the red-black tree after insertion
 void fixViolation(RBTreeNode **root, RBTreeNode *z) {
     while (z != *root && z->parent->color == RED) {
         RBTreeNode *grandparent = z->parent->parent;
@@ -127,7 +121,7 @@ void fixViolation(RBTreeNode **root, RBTreeNode *z) {
     (*root)->color = BLACK;
 }
 
-// Insert a new node with given data
+// Inserting values in the order: 12 30 45 6 17 8 19 230 24 
 RBTreeNode* insert(RBTreeNode* root, int data) {
     RBTreeNode *newNode = createNode(data);
     RBTreeNode *y = NULL;
@@ -153,7 +147,7 @@ RBTreeNode* insert(RBTreeNode* root, int data) {
     return root;
 }
 
-// Delete a node from the Red-Black Tree
+// Deleting node (in a later part): 17
 RBTreeNode* deleteNode(RBTreeNode* root, int data) {
     RBTreeNode *z = root, *x, *y;
     
@@ -223,7 +217,6 @@ RBTreeNode* deleteNode(RBTreeNode* root, int data) {
     return root;
 }
 
-// Fix the red-black tree after deletion
 void fixDeletion(RBTreeNode **root, RBTreeNode *x) {
     while (x != *root && x->color == BLACK) {
         if (x == x->parent->left) {
@@ -281,30 +274,31 @@ void fixDeletion(RBTreeNode **root, RBTreeNode *x) {
     if (x) x->color = BLACK;
 }
 
-// Search for a value in the tree
+// Searching for value: 12 (red), found
+// Searching for value: 5, not found
 RBTreeNode* search(RBTreeNode* root, int data) {
     // Traverse the tree
     while (root != TNULL) {
         if (root->data == data) {
-            return root; // Found the node
+            return root;
         }
         if (data < root->data) {
-            root = root->left; // Go left
+            root = root->left;
         } else {
-            root = root->right; // Go right
+            root = root->right;
         }
     }
-    return TNULL; // Return TNULL if not found
+    return TNULL;
 }
 
-// Find the maximum value in the tree
+// Maximum value: 230(red)
 RBTreeNode* findMax(RBTreeNode* node) {
     while (node->right != TNULL)
         node = node->right;
     return node;
 }
 
-// Find the minimum value in the tree
+// Minimum value: 6(black)
 RBTreeNode* findMin(RBTreeNode* node) {
     while (node->left != TNULL)
         node = node->left;
@@ -320,7 +314,7 @@ int height(RBTreeNode* node) {
     return 1 + (leftHeight > rightHeight ? leftHeight : rightHeight);
 }
 
-// Count the number of black nodes along any path from the root to a leaf
+// No of black nodes: 2
 int blackNodeCount(RBTreeNode* node) {
     int count = 0;
     while (node != TNULL) {
@@ -331,7 +325,7 @@ int blackNodeCount(RBTreeNode* node) {
     return count;
 }
 
-// In-order traversal
+//In-order traversal: 6 (Black) 8 (Red) 12 (Red) 17 (Red) 19 (Black) 24 (Red) 30 (Black) 45 (Black) 230 (Red) 
 void inOrder(RBTreeNode* root) {
     if (root == TNULL)
         return;
@@ -340,7 +334,7 @@ void inOrder(RBTreeNode* root) {
     inOrder(root->right);
 }
 
-// Pre-order traversal
+//Pre-order traversal: 30 (Black) 12 (Red) 6 (Black) 8 (Red) 19 (Black) 17 (Red) 24 (Red) 45 (Black) 230 (Red) 
 void preOrder(RBTreeNode* root) {
     if (root == TNULL)
         return;
@@ -349,7 +343,7 @@ void preOrder(RBTreeNode* root) {
     preOrder(root->right);
 }
 
-// Post-order traversal
+//Post-order traversal: 8 (Red) 6 (Black) 17 (Red) 24 (Red) 19 (Black) 12 (Red) 230 (Red) 45 (Black) 30 (Black) 
 void postOrder(RBTreeNode* root) {
     if (root == TNULL)
         return;
@@ -358,7 +352,43 @@ void postOrder(RBTreeNode* root) {
     printf("%d (%s) ", root->data, root->color == RED ? "Red" : "Black");
 }
 
-// Display a single node with its color and children
+/* Displaying the tree with node value,colour and children
+Node: 30 (Color: BLACK)
+  Left Child: 12
+  Right Child: 45
+
+Node: 12 (Color: RED)
+  Left Child: 6
+  Right Child: 19
+
+Node: 6 (Color: BLACK)
+  Left Child: NULL
+  Right Child: 8
+
+Node: 8 (Color: RED)
+  Left Child: NULL
+  Right Child: NULL
+
+Node: 19 (Color: BLACK)
+  Left Child: 17
+  Right Child: 24
+
+Node: 17 (Color: RED)
+  Left Child: NULL
+  Right Child: NULL
+
+Node: 24 (Color: RED)
+  Left Child: NULL
+  Right Child: NULL
+
+Node: 45 (Color: BLACK)
+  Left Child: NULL
+  Right Child: 230
+
+Node: 230 (Color: RED)
+  Left Child: NULL
+  Right Child: NULL
+*/
 void displayNode(RBTreeNode* node) {
     if (node != TNULL) {
         printf("Node: %d (Color: %s)\n", node->data, (node->color == RED) ? "RED" : "BLACK");
@@ -380,7 +410,6 @@ void displayNode(RBTreeNode* node) {
     }
 }
 
-// Display function that starts the recursive display from the root node
 void display(RBTreeNode* root) {
     if (root == TNULL) {
         printf("The tree is empty.\n");
@@ -389,6 +418,7 @@ void display(RBTreeNode* root) {
         displayNode(root);
     }
 }
+//Destroys existing RB tree
 void destroyTree(RBTreeNode* root, RBTreeNode* TNULL) {
     if (root == TNULL)
         return;
@@ -425,7 +455,7 @@ int main() {
                  printf("Enter data to search: ");
                  scanf("%d", &data);
                   RBTreeNode* searchResult = search(root, data);
-                  if (searchResult != TNULL) // Check against TNULL instead of NULL
+                  if (searchResult != TNULL)
                      printf("Data found: %d (%s)\n", searchResult->data, searchResult->color == RED ? "Red" : "Black");
                   else
                       printf("Data not found.\n");
