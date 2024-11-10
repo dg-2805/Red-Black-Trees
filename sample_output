@@ -17,42 +17,10 @@ Menu:
 11. Display
 12.Destroy
 0. Exit
- Enter your choice: 1 12 1 30 1 45 1 6 1 17 1 8 1 19 1 230 1 24
+ Enter your choice: 1 20 1 15 1 25 1 10 1 18 1 30 1 5 1 1
+2 1 16 1 22 1 35
 Enter data to insert: 
 
-Menu:
-1. Insert
-2. Delete
-3. Search
-4. Find Max
-5. Find Min
-6. Height
-7. Black Node Count
-8. In-order Traversal
-9. Pre-order Traversal
-10. Post-order Traversal
-11. Display
-12.Destroy
-0. Exit
- Enter your choice: 4
-Max value: 230 (Red)
-
-Menu:
-1. Insert
-2. Delete
-3. Search
-4. Find Max
-5. Find Min
-6. Height
-7. Black Node Count
-8. In-order Traversal
-9. Pre-order Traversal
-10. Post-order Traversal
-11. Display
-12.Destroy
-0. Exit
- Enter your choice: 5
-Min value: 6 (Black)
 
 Menu:
 1. Insert
@@ -71,39 +39,47 @@ Menu:
  Enter your choice: 11
 Displaying the Red-Black Tree:
 
-Node: 30 (Color: BLACK)
-  Left Child: 12
-  Right Child: 45
+Node: 20 (Color: BLACK)
+  Left Child: 15
+  Right Child: 25
+
+Node: 15 (Color: RED)
+  Left Child: 10
+  Right Child: 18
+
+Node: 10 (Color: BLACK)
+  Left Child: 5
+  Right Child: 12
+
+Node: 5 (Color: RED)
+  Left Child: NULL
+  Right Child: NULL
 
 Node: 12 (Color: RED)
-  Left Child: 6
-  Right Child: 19
-
-Node: 6 (Color: BLACK)
-  Left Child: NULL
-  Right Child: 8
-
-Node: 8 (Color: RED)
   Left Child: NULL
   Right Child: NULL
 
-Node: 19 (Color: BLACK)
-  Left Child: 17
-  Right Child: 24
+Node: 18 (Color: BLACK)
+  Left Child: 16
+  Right Child: NULL
 
-Node: 17 (Color: RED)
+Node: 16 (Color: RED)
   Left Child: NULL
   Right Child: NULL
 
-Node: 24 (Color: RED)
+Node: 25 (Color: RED)
+  Left Child: 22
+  Right Child: 30
+
+Node: 22 (Color: BLACK)
   Left Child: NULL
   Right Child: NULL
 
-Node: 45 (Color: BLACK)
+Node: 30 (Color: BLACK)
   Left Child: NULL
-  Right Child: 230
+  Right Child: 35
 
-Node: 230 (Color: RED)
+Node: 35 (Color: RED)
   Left Child: NULL
   Right Child: NULL
 
@@ -122,8 +98,206 @@ Menu:
 11. Display
 12.Destroy
 0. Exit
- Enter your choice: 8
-In-order traversal: 6 (Black) 8 (Red) 12 (Red) 17 (Red) 19 (Black) 24 (Red) 30 (Black) 45 (Black) 230 (Red) 
+ Enter your choice: 2
+Enter data to delete: 5
+
+Menu:
+1. Insert
+2. Delete
+3. Search
+4. Find Max
+5. Find Min
+6. Height
+7. Black Node Count
+8. In-order Traversal
+9. Pre-order Traversal
+10. Post-order Traversal
+11. Display
+12.Destroy
+0. Exit
+ Enter your choice: 2
+Enter data to delete: 10
+
+Menu:
+1. Insert
+2. Delete
+3. Search
+4. Find Max
+5. Find Min
+6. Height
+7. Black Node Count
+8. In-order Traversal
+9. Pre-order Traversal
+10. Post-order Traversal
+11. Display
+12.Destroy
+0. Exit
+ Enter your choice: 2
+Enter data to delete: 22
+
+Menu:
+1. Insert
+2. Delete
+3. Search
+4. Find Max
+5. Find Min
+6. Height
+7. Black Node Count
+8. In-order Traversal
+9. Pre-order Traversal
+10. Post-order Traversal
+11. Display
+12.Destroy
+0. Exit
+ Enter your choice: 2
+Enter data to delete: 18
+
+Menu:
+1. Insert
+2. Delete
+3. Search
+4. Find Max
+5. Find Min
+6. Height
+7. Black Node Count
+8. In-order Traversal
+9. Pre-order Traversal
+10. Post-order Traversal
+11. Display
+12.Destroy
+0. Exit
+ Enter your choice: 2
+Enter data to delete: 30
+
+Menu:
+1. Insert
+2. Delete
+3. Search
+4. Find Max
+5. Find Min
+6. Height
+7. Black Node Count
+8. In-order Traversal
+9. Pre-order Traversal
+10. Post-order Traversal
+11. Display
+12.Destroy
+0. Exit
+ Enter your choice: 11
+Displaying the Red-Black Tree:
+
+Node: 20 (Color: BLACK)
+  Left Child: 15
+  Right Child: 35
+
+Node: 15 (Color: RED)
+  Left Child: 12
+  Right Child: 16
+
+Node: 12 (Color: BLACK)
+  Left Child: NULL
+  Right Child: NULL
+
+Node: 16 (Color: BLACK)
+  Left Child: NULL
+  Right Child: NULL
+
+Node: 35 (Color: BLACK)
+  Left Child: 25
+  Right Child: NULL
+
+Node: 25 (Color: RED)
+  Left Child: NULL
+  Right Child: NULL
+
+
+Menu:
+1. Insert
+2. Delete
+3. Search
+4. Find Max
+5. Find Min
+6. Height
+7. Black Node Count
+8. In-order Traversal
+9. Pre-order Traversal
+10. Post-order Traversal
+11. Display
+12.Destroy
+0. Exit
+ Enter your choice: 3
+Enter data to search: 15
+Data found: 15 (Red)
+
+Menu:
+1. Insert
+2. Delete
+3. Search
+4. Find Max
+5. Find Min
+6. Height
+7. Black Node Count
+8. In-order Traversal
+9. Pre-order Traversal
+10. Post-order Traversal
+11. Display
+12.Destroy
+0. Exit
+ Enter your choice: 3
+Enter data to search: 22
+Data not found.
+
+Menu:
+1. Insert
+2. Delete
+3. Search
+4. Find Max
+5. Find Min
+6. Height
+7. Black Node Count
+8. In-order Traversal
+9. Pre-order Traversal
+10. Post-order Traversal
+11. Display
+12.Destroy
+0. Exit
+ Enter your choice: 3
+Enter data to search: 40
+Data not found.
+
+Menu:
+1. Insert
+2. Delete
+3. Search
+4. Find Max
+5. Find Min
+6. Height
+7. Black Node Count
+8. In-order Traversal
+9. Pre-order Traversal
+10. Post-order Traversal
+11. Display
+12.Destroy
+0. Exit
+ Enter your choice: 4
+Max value: 35 (Black)
+
+Menu:
+1. Insert
+2. Delete
+3. Search
+4. Find Max
+5. Find Min
+6. Height
+7. Black Node Count
+8. In-order Traversal
+9. Pre-order Traversal
+10. Post-order Traversal
+11. Display
+12.Destroy
+0. Exit
+ Enter your choice: 5
+Min value: 12 (Black)
 
 Menu:
 1. Insert
@@ -140,7 +314,7 @@ Menu:
 12.Destroy
 0. Exit
  Enter your choice: 6
-Height of the tree: 4
+Height of the tree: 3
 
 Menu:
 1. Insert
@@ -173,27 +347,8 @@ Menu:
 11. Display
 12.Destroy
 0. Exit
- Enter your choice: 3
-Enter data to search: 12
-Data found: 12 (Red)
-
-Menu:
-1. Insert
-2. Delete
-3. Search
-4. Find Max
-5. Find Min
-6. Height
-7. Black Node Count
-8. In-order Traversal
-9. Pre-order Traversal
-10. Post-order Traversal
-11. Display
-12.Destroy
-0. Exit
- Enter your choice: 3
-Enter data to search: 5
-Data not found.
+ Enter your choice: 8
+In-order traversal: 12 (Black) 15 (Red) 16 (Black) 20 (Black) 25 (Red) 35 (Black)
 
 Menu:
 1. Insert
@@ -210,7 +365,7 @@ Menu:
 12.Destroy
 0. Exit
  Enter your choice: 9
-Pre-order traversal: 30 (Black) 12 (Red) 6 (Black) 8 (Red) 19 (Black) 17 (Red) 24 (Red) 45 (Black) 230 (Red) 
+Pre-order traversal: 20 (Black) 15 (Red) 12 (Black) 16 (Black) 35 (Black) 25 (Red)
 
 Menu:
 1. Insert
@@ -227,91 +382,7 @@ Menu:
 12.Destroy
 0. Exit
  Enter your choice: 10
-Post-order traversal: 8 (Red) 6 (Black) 17 (Red) 24 (Red) 19 (Black) 12 (Red) 230 (Red) 45 (Black) 30 (Black) 
-
-Menu:
-1. Insert
-2. Delete
-3. Search
-4. Find Max
-5. Find Min
-6. Height
-7. Black Node Count
-8. In-order Traversal
-9. Pre-order Traversal
-10. Post-order Traversal
-11. Display
-12.Destroy
-0. Exit
- Enter your choice: 2
-Enter data to delete: 17
-
-Menu:
-1. Insert
-2. Delete
-3. Search
-4. Find Max
-5. Find Min
-6. Height
-7. Black Node Count
-8. In-order Traversal
-9. Pre-order Traversal
-10. Post-order Traversal
-11. Display
-12.Destroy
-0. Exit
- Enter your choice: 8
-In-order traversal: 6 (Black) 8 (Red) 12 (Red) 19 (Black) 24 (Red) 30 (Black) 45 (Black) 230 (Red) 
-
-Menu:
-1. Insert
-2. Delete
-3. Search
-4. Find Max
-5. Find Min
-6. Height
-7. Black Node Count
-8. In-order Traversal
-9. Pre-order Traversal
-10. Post-order Traversal
-11. Display
-12.Destroy
-0. Exit
- Enter your choice: 11
-Displaying the Red-Black Tree:
-
-Node: 30 (Color: BLACK)
-  Left Child: 12
-  Right Child: 45
-
-Node: 12 (Color: RED)
-  Left Child: 6
-  Right Child: 19
-
-Node: 6 (Color: BLACK)
-  Left Child: NULL
-  Right Child: 8
-
-Node: 8 (Color: RED)
-  Left Child: NULL
-  Right Child: NULL
-
-Node: 19 (Color: BLACK)
-  Left Child: NULL
-  Right Child: 24
-
-Node: 24 (Color: RED)
-  Left Child: NULL
-  Right Child: NULL
-
-Node: 45 (Color: BLACK)
-  Left Child: NULL
-  Right Child: 230
-
-Node: 230 (Color: RED)
-  Left Child: NULL
-  Right Child: NULL
-
+Post-order traversal: 12 (Black) 16 (Black) 15 (Red) 25 (Red) 35 (Black) 20 (Black)
 
 Menu:
 1. Insert
